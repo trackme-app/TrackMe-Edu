@@ -5,7 +5,7 @@ title: "[Dev] "
 labels: "development"
 assignees: "trackme-ddisley"
 projects: "TrackMe-Edu - Pre release"
-milestones: "MVP"
+milestone: "MVP"
 ---
 
 ## Description
