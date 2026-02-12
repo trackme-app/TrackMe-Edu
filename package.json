@@ -1,0 +1,17 @@
+{
+  "name": "tme",
+  "private": true,
+  "workspaces": [
+    "src/admin/services/*",
+    "src/admin/apps/*",
+    "src/application/services/*",
+    "src/application/apps/*",
+    "src/packages/*"
+  ],
+  "scripts": {
+    "dev:compose":"docker compose up --build",
+    "dev:compose-down":"docker compose down --rmi all -v",
+    "dev:k8s":"",
+    "dev:k8s-down":""
+  }
+}
