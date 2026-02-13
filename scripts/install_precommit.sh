@@ -15,13 +15,13 @@ NC='\033[0m' # No Color (reset)
 EXIT_CODE=0
 
 echo "${BLUE}🔎 Scanning staged files for TODO items...${NC}"
-if git grep --cached -q 'TODO' -- ':(exclude)install_precommit.sh'; then
+if git grep --cached -q 'TODO' -- ':(exclude)*install_precommit.sh'; then
     echo "${RED}🚨 Your commit contains TODO comments. Resolve them or create Github issues and remove them before committing.${NC}"
    EXIT_CODE=1
 fi
 
 echo "${BLUE}🔎 Scanning staged files for console output...${NC}"
-if git grep --cached -q 'console.' -- ':(exclude)install_precommit.sh'; then
+if git grep --cached -q 'console.' -- ':(exclude)*install_precommit.sh'; then
     echo "${RED}🚨 Your commit contains output using a 'console.XYZ' method. Ensure all logging is handled by the logger.${NC}"
    EXIT_CODE=1
 fi
@@ -29,7 +29,7 @@ fi
 echo "${BLUE}🔎 Scanning staged files for secrets...${NC}"
 
 # Get staged files (added, copied, modified)
-FILES=$(git diff --cached --name-only --diff-filter=ACM -- ":(exclude)install_precommit.sh" ":(exclude)package-lock.json")
+FILES=$(git diff --cached --name-only --diff-filter=ACM -- ":(exclude)*install_precommit.sh" ":(exclude)*package-lock.json")
 
 [ -z "$FILES" ] && exit 0
 
