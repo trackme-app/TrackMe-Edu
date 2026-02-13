@@ -61,3 +61,5 @@ sed -i 's|"test": "echo \\"Error: no test specified\\" && exit 1"|"build": "tsc"
 
 npm i --save-dev typescript ts-node @types/node
 mkdir -p src
+cd src
+touch index.ts
