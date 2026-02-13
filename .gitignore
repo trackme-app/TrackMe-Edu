@@ -146,3 +146,8 @@ vite.config.ts.timestamp-*
 # Docker
 compose.yml
 compose*.yml
+!compose.example.yml
+
+# Temp data
+temp/
+temp/**

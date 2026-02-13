@@ -1,0 +1,52 @@
+name: TrackMeEdu
+services: # TODO: ADD MORE SERVICES
+  ca:
+    image: alpine/openssl:3.5.5
+    container_name: ca-manager
+    domainname: trackmeedu.local
+    volumes:
+      - ./temp/certs:/certs
+    environment:
+      - HOSTNAMES=api auth
+    working_dir: /certs
+    entrypoint: |
+      /bin/sh -c "
+      if [ ! -f rootCA.crt ]; then
+        openssl genrsa -out rootCA.key 4096
+        openssl req -x509 -new -nodes -key rootCA.key -sha256 -days 3650 -out rootCA.crt -subj '/CN=ca_trackmeedu.local'
+      fi
+      if [ ! -f intermediateCA.crt ]; then
+        openssl genrsa -out intermediateCA.key 4096
+        openssl req -new -key intermediateCA.key -out intermediateCA.csr -subj '/CN=int1_trackmeedu.local'
+        openssl x509 -req -in intermediateCA.csr -CA rootCA.crt -CAkey rootCA.key -CAcreateserial -out intermediateCA.crt -days 3650 -sha256
+      fi
+      for host in $$HOSTNAMES; do
+        if [ ! -f $$host.crt ]; then
+          openssl genrsa -out $$host.key 4096
+          openssl req -new -key $$host.key -out $$host.csr -subj \"/CN=$$host.trackmeedu.local\"
+          openssl x509 -req -in $$host.csr -CA intermediateCA.crt -CAkey intermediateCA.key -CAcreateserial -out $$host.crt -days 3650 -sha256
+        fi
+      done
+      "
+
+  localstack:
+    container_name: "localstack-main"
+    image: localstack/localstack
+    ports:
+      - "4566:4566"            # LocalStack Gateway
+      - "4510-4559:4510-4559"  # external services port range
+    environment:
+      # LocalStack configuration: https://docs.localstack.cloud/references/configuration/
+      - DEBUG=${DEBUG:-0}
+      - AWS_REGION=${AWS_REGION:-us-east-1}
+    volumes:
+      - "${LOCALSTACK_VOLUME_DIR:-localstack_data}:/var/lib/localstack"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    networks:
+      - localstack
+volumes:
+  localstack_data:
+networks:
+  localstack:
+    driver: bridge
+    name: localstack
