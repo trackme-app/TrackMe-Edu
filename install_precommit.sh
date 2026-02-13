@@ -76,7 +76,7 @@ done
 
 if [ $EXIT_CODE -ne 0 ]; then
   echo ""
-  echo "${RED}🚨 Commit blocked. Remove secrets before committing.${NC}"
+  echo "${RED}🚨 Commit blocked. Remove secrets and TODOs before committing.${NC}"
   echo "${YELLOW}If this is a false positive, review carefully before bypassing.${NC}"
   exit 1
 fi
