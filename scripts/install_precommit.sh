@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd .git/hooks
+cd ../.git/hooks
 if [ ! -f pre-commit ]; then
 cat << 'EOF' > pre-commit
 #!/bin/sh
