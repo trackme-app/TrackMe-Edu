@@ -1,5 +1,5 @@
 name: TrackMeEdu
-services: # TODO: ADD MORE SERVICES TODO
+services:
   ca:
     image: alpine/openssl:3.5.5
     container_name: ca-manager
