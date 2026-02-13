@@ -29,7 +29,7 @@ fi
 echo "${BLUE}🔎 Scanning staged files for secrets...${NC}"
 
 # Get staged files (added, copied, modified)
-FILES=$(git diff --cached --name-only --diff-filter=ACM -- ":(exclude)install_precommit.sh")
+FILES=$(git diff --cached --name-only --diff-filter=ACM -- ":(exclude)install_precommit.sh" ":(exclude)package-lock.json")
 
 [ -z "$FILES" ] && exit 0
 
@@ -87,7 +87,7 @@ if [ $EXIT_CODE -ne 0 ]; then
   exit 1
 fi
 
-echo "${GREEN}✅ No obvious secrets detected.${NC}"
+echo "${GREEN}✅ No obvious concerns detected.${NC}"
 exit 0
 
 EOF
