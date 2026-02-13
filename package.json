@@ -9,9 +9,12 @@
     "src/packages/*"
   ],
   "scripts": {
-    "dev:compose":"docker compose up --build",
-    "dev:compose-down":"docker compose down --rmi all -v",
-    "dev:k8s":"",
-    "dev:k8s-down":""
+    "dev:compose": "docker compose up --build",
+    "dev:compose-down": "docker compose down --rmi all -v",
+    "dev:k8s": "",
+    "dev:k8s-down": ""
+  },
+  "dependencies": {
+    "typescript": "^5.9.3"
   }
 }

@@ -20,6 +20,12 @@ if git grep --cached -q 'TODO' -- ':(exclude)install_precommit.sh'; then
    EXIT_CODE=1
 fi
 
+echo "${BLUE}🔎 Scanning staged files for console output...${NC}"
+if git grep --cached -q 'console.' -- ':(exclude)install_precommit.sh'; then
+    echo "${RED}🚨 Your commit contains output using a 'console.XYZ' method. Ensure all logging is handled by the logger.${NC}"
+   EXIT_CODE=1
+fi
+
 echo "${BLUE}🔎 Scanning staged files for secrets...${NC}"
 
 # Get staged files (added, copied, modified)
