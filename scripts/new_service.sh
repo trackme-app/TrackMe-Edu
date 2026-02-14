@@ -44,22 +44,51 @@ service_types=(
     "shared"
 )
 
+service_categories=(
+    "services"
+    "apps"
+)
+
 choose_from_menu "Select a service type:" service_type "${service_types[@]}"
 echo "You selected: $service_type"
+
+if [ "$service_type" != "shared" ]; then
+    choose_from_menu "Select a service category" service_category "${service_categories[@]}"
+    echo "You selected: $service_category"
+fi
 
 read -p "Enter the new service name: " service_name
 echo "You entered: $service_name"
 
-cd src/$service_type
+mkdir -p src
+cd src
+
+mkdir -p $service_type
+cd $service_type
+
+if [ "$service_type" != "shared" ]; then
+    mkdir -p "$service_category"
+    cd "$service_category"
+fi
+
 mkdir -p "$service_name"
 cd "$service_name"
 
-npm init -y
+npm init --init-license MIT --init-type commonjs -y
 
-sed -i "s/\"name\": \"ui\"/\"name\": \"@tme\/$service_type-$service_name\"/" package.json
+sed -i "s/\"name\": \"$service_name\"/\"name\": \"@tme\/$service_type-$service_name\"/" package.json
 sed -i 's|"test": "echo \\"Error: no test specified\\" && exit 1"|"build": "tsc",\n    "start": "node dist/index.js",\n    "dev": "ts-node src/index.ts"|' package.json
 
-npm i --save-dev typescript ts-node @types/node
+echo '{"extends": "./tsconfig.base.json"}' > tsconfig.json
+if [ "$service_type" != "shared" ]; then
+    cp ../../../../tsconfig.base.json tsconfig.base.json
+else
+    cp ../../../tsconfig.base.json tsconfig.base.json
+fi
+
 mkdir -p src
 cd src
 touch index.ts
+
+cd ../../../../../
+npm i --save-dev typescript ts-node @types/node --workspace "@tme/$service_type-$service_name"
