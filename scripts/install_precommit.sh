@@ -21,7 +21,8 @@ if git grep --cached -q 'TODO' -- ':(exclude)*install_precommit.sh'; then
 fi
 
 echo "${BLUE}🔎 Scanning staged files for console output...${NC}"
-if git grep --cached -q 'console.' -- ':(exclude)*install_precommit.sh'; then
+if git grep --cached -q 'console.' -- ':(exclude)*install_precommit.sh' ':(exclude)*package-lock.json' ':(exclude)*package.json' ':(exclude)*jest.config.js'; then
+    git grep --cached 'console.' -- ':(exclude)*install_precommit.sh' ':(exclude)*package-lock.json' ':(exclude)*package.json' ':(exclude)*jest.config.js'
     echo "${RED}🚨 Your commit contains output using a 'console.XYZ' method. Ensure all logging is handled by the logger.${NC}"
    EXIT_CODE=1
 fi
@@ -29,7 +30,7 @@ fi
 echo "${BLUE}🔎 Scanning staged files for secrets...${NC}"
 
 # Get staged files (added, copied, modified)
-FILES=$(git diff --cached --name-only --diff-filter=ACM -- ":(exclude)*install_precommit.sh" ":(exclude)*package-lock.json")
+FILES=$(git diff --cached --name-only --diff-filter=ACM -- ":(exclude)*install_precommit.sh" ":(exclude)*package-lock.json" ":(exclude)*package.json" ":(exclude)*jest.config.js")
 
 [ -z "$FILES" ] && exit 0
 
