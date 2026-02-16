@@ -9,6 +9,7 @@
     "src/shared/*"
   ],
   "scripts": {
+    "test": "npm run test --workspaces",
     "dev:compose": "docker compose up --build",
     "dev:compose-down": "docker compose down --rmi all -v",
     "dev:k8s": "",
