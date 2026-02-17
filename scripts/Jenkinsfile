@@ -10,6 +10,12 @@ pipeline {
     }
 
     stages {
+        stage('Setup System Dependencies') {
+            steps {
+                sh 'apt-get update && apt-get install -y libatomic1'
+            }
+        }
+        
         stage('Checkout') {
             steps {
                 // Replace with your repo URL
