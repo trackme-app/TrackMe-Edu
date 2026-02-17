@@ -16,6 +16,12 @@ pipeline {
             }
         }
 
+        stage('Check Current Dir') {
+            steps {
+                sh 'pwd'
+            }
+        }
+
         stage('Install Dependencies') {
             steps {
                 sh 'npm install'
