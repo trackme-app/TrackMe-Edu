@@ -1,10 +1,11 @@
 ---
 name: Initial Development Task
-about: Track foundational development tasks such as creating base services, scaffolding, or core architecture.
+about: Track foundational development tasks such as creating base services, scaffolding,
+  or core architecture.
 title: "[Dev] "
-labels: "development"
-assignees: "trackme-ddisley"
-projects: "TrackMe-Edu - Pre release"
+labels: mvp
+assignees: trackme-ddisley
+
 ---
 
 ## Description

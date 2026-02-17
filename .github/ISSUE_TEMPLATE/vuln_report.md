@@ -2,7 +2,7 @@
 name: Vulnerability Report
 about: Report a vulnerability in this project
 title: "[VULN] "
-labels: vulnerability
+labels: ''
 assignees: trackme-ddisley
 
 ---
