@@ -6,7 +6,7 @@ pipeline {
     }
 
     tools {
-        nodejs 'node-25' // Name of NodeJS installation in Jenkins
+        nodejs 'node-19' // Name of NodeJS installation in Jenkins
     }
 
     stages {
