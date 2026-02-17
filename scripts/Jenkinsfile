@@ -1,11 +1,39 @@
-pipeline {
-    agent any
-
-    stages {
-        stage('Hello') {
-            steps {
-                echo 'Hello World'
+{
+  "pipeline": {
+    "agent": {
+      "any": {}
+    },
+    "environment": {
+      "NODE_ENV": "production"
+    },
+    "stages": [
+      {
+        "stage": "Checkout",
+        "steps": [
+          {
+            "git": {
+              "url": "https://github.com/your-username/your-repo.git",
+              "branch": "main"
             }
-        }
-    }
+          }
+        ]
+      },
+      {
+        "stage": "Install Dependencies",
+        "steps": [
+          {
+            "sh": "npm install"
+          }
+        ]
+      },
+      {
+        "stage": "Build",
+        "steps": [
+          {
+            "sh": "npm run build"
+          }
+        ]
+      }
+    ]
+  }
 }
