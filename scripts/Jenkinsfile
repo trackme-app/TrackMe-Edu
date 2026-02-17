@@ -12,13 +12,16 @@ pipeline {
     stages {
         stage('Setup System Dependencies') {
             steps {
-                sh 'apt-get update && apt-get install -y libatomic1'
+                // Install libatomic on Ubuntu/Debian agents
+                sh '''
+                    apt-get update
+                    apt-get install -y libatomic1
+                '''
             }
         }
-        
+
         stage('Checkout') {
             steps {
-                // Replace with your repo URL
                 git branch: 'dev', url: 'https://github.com/trackme-app/TrackMe-Edu.git'
             }
         }
