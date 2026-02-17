@@ -5,6 +5,10 @@ pipeline {
         NODE_ENV = 'production'
     }
 
+    tools {
+        nodejs 'node-25' // Name of NodeJS installation in Jenkins
+    }
+
     stages {
         stage('Checkout') {
             steps {
