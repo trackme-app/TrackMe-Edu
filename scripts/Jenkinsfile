@@ -12,18 +12,6 @@ pipeline {
             }
         }
 
-        stage('Check Current Dir') {
-            steps {
-                sh 'pwd'
-            }
-        }
-
-        stage('Get Siblings') {
-            steps {
-                sh 'ls -la'
-            }
-        }
-
         stage('Install Dependencies') {
             steps {
                 sh 'npm install --workspaces'
