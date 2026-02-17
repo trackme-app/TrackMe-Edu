@@ -1,25 +1,15 @@
 pipeline {
-    agent {
-        docker {
-            image 'node:25-bullseye' // Debian-based Node.js image
-            args '-u root'            // Run container as root so you can install packages
-        }
-    }
+    agent any
 
     environment {
         NODE_ENV = 'production'
     }
 
-    stages {
-        stage('Setup System Dependencies') {
-            steps {
-                sh '''
-                    apt-get update
-                    apt-get install -y libatomic1
-                '''
-            }
-        }
+    tools {
+        nodejs 'node-25' // Name of NodeJS installation in Jenkins
+    }
 
+    stages {
         stage('Checkout') {
             steps {
                 git branch: 'dev', url: 'https://github.com/trackme-app/TrackMe-Edu.git'
