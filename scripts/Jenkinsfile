@@ -1,5 +1,4 @@
-{
-  "pipeline": {
+"pipeline": {
     "agent": {
       "any": {}
     },
@@ -36,4 +35,3 @@
       }
     ]
   }
-}
