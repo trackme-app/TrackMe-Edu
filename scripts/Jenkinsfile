@@ -12,8 +12,8 @@
         "steps": [
           {
             "git": {
-              "url": "https://github.com/your-username/your-repo.git",
-              "branch": "main"
+              "url": "https://github.com/trackme-app/TrackMe-Edu.git",
+              "branch": "dev"
             }
           }
         ]
