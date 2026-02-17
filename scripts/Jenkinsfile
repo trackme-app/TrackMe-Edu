@@ -1,37 +1,28 @@
-"pipeline": {
-    "agent": {
-      "any": {}
-    },
-    "environment": {
-      "NODE_ENV": "production"
-    },
-    "stages": [
-      {
-        "stage": "Checkout",
-        "steps": [
-          {
-            "git": {
-              "url": "https://github.com/trackme-app/TrackMe-Edu.git",
-              "branch": "dev"
+pipeline {
+    agent any
+
+    environment {
+        NODE_ENV = 'production'
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                // Replace with your repo URL
+                git branch: 'dev', url: 'https://github.com/trackme-app/TrackMe-Edu.git'
             }
-          }
-        ]
-      },
-      {
-        "stage": "Install Dependencies",
-        "steps": [
-          {
-            "sh": "npm install"
-          }
-        ]
-      },
-      {
-        "stage": "Build",
-        "steps": [
-          {
-            "sh": "npm run build"
-          }
-        ]
-      }
-    ]
-  }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                sh 'npm install'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                sh 'npm run build'
+            }
+        }
+    }
+}
