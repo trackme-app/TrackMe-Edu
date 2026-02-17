@@ -1,6 +1,6 @@
 # TrackMe Education
 
-## What is TrackMe Education?
+## What is TrackMe Education? 
 
 ## How to run locally
 This repository uses Docker to run the application locally.
