@@ -1,21 +1,21 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'node:25-bullseye' // Debian-based Node.js image
+            args '-u root'            // Run container as root so you can install packages
+        }
+    }
 
     environment {
         NODE_ENV = 'production'
     }
 
-    tools {
-        nodejs 'node-25' // Name of NodeJS installation in Jenkins
-    }
-
     stages {
         stage('Setup System Dependencies') {
             steps {
-                // Install libatomic on Ubuntu/Debian agents
                 sh '''
-                    sudo apt-get update
-                    sudo apt-get install -y libatomic1
+                    apt-get update
+                    apt-get install -y libatomic1
                 '''
             }
         }
