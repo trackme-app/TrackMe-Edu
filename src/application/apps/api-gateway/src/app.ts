@@ -1,7 +1,7 @@
 import express, { Request, Response, NextFunction } from 'express';
 import { createServiceLogger } from '@tme/shared-shared_utils';
 
-const logger = createServiceLogger('admin-api-gateway');
+const logger = createServiceLogger('application-api-gateway');
 
 const app = express();
 

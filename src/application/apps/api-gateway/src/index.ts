@@ -4,7 +4,7 @@ import app from './app';
 import config from './config/config';
 import { createServiceLogger } from '@tme/shared-shared_utils';
 
-const logger = createServiceLogger('admin-api-gateway');
+const logger = createServiceLogger('application-api-gateway');
 
 if (config.ssl && config.ssl.key && config.ssl.cert) {
     const options = {
