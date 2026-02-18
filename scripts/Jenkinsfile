@@ -1,10 +1,6 @@
 pipeline {
     agent any
 
-    environment {
-        NODE_ENV = 'production'
-    }
-
     tools {
         nodejs 'node-25' // Name of NodeJS installation in Jenkins
     }
@@ -18,7 +14,7 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                sh 'npm install'
+                sh 'npm install --workspaces'
             }
         }
 
