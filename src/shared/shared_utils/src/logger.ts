@@ -1,39 +1,35 @@
-import pino from 'pino';
+import pino from "pino";
 
-const targets: pino.TransportTargetOptions[] = [];
+const targets = [];
 
-// Logtail transport if token is available
 if (process.env.LOGTAIL_SOURCE_TOKEN && process.env.LOGTAIL_ENDPOINT) {
     targets.push({
         target: "@logtail/pino",
         options: {
             sourceToken: process.env.LOGTAIL_SOURCE_TOKEN,
-            options: { endpoint: process.env.LOGTAIL_ENDPOINT }
+            options: {
+                endpoint: process.env.LOGTAIL_ENDPOINT,
+            }
         },
+        level: process.env.LOG_LEVEL || "info"
     });
 }
 
-// Pretty print for local development (if not in production or if explicitly enabled)
-if (process.env.NODE_ENV && process.env.NODE_ENV !== 'production' || process.env.ENABLE_PRETTY_LOGGING && process.env.ENABLE_PRETTY_LOGGING === 'true') {
+if (process.env.NODE_ENV !== "production") {
     targets.push({
         target: "pino-pretty",
         options: {
             colorize: true,
             translateTime: "SYS:dd-mm-yyyy HH:MM:ss",
-            ignore: "pid,hostname",
         },
+        level: process.env.LOG_LEVEL || "info"
     });
 }
 
-const transport = pino.transport({
-    targets,
-});
+const transport = targets.length > 0 ? pino.transport({ targets }) : undefined;
 
 const logger = pino(
-    {
-        level: process.env.LOG_LEVEL || "info",
-        timestamp: () => `,"dt":"${pino.stdTimeFunctions.isoTime()}"`
-    },
+    { level: process.env.LOG_LEVEL || "info" },
     transport
 );
 
@@ -51,7 +47,10 @@ export const createServiceLogger = (serviceName: string) => {
  * @param traceId The unique identifier for the trace.
  * @returns A pino child logger.
  */
-export const createTraceLogger = (traceId: string) => {
+export const createTraceLogger = (traceId: string, logObject?: pino.Logger) => {
+    if (logObject) {
+        return logObject.child({ trace_id: traceId });
+    }
     return logger.child({ trace_id: traceId });
 };
 
