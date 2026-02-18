@@ -59,4 +59,4 @@ erDiagram
 		UUID user_id
 		UUID course_id
 	}
-```
+``` 
