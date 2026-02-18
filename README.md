@@ -60,3 +60,4 @@ erDiagram
 		UUID course_id
 	}
 ```
+ 
