@@ -11,6 +11,7 @@
   "scripts": {
     "test": "npm run test --workspaces",
     "build": "npm run build --workspaces",
+    "build:shared": "npm run build --workspace @tme/shared-shared_utils",
     "dev:compose": "docker compose up --build",
     "dev:compose-down": "docker compose down --rmi all -v",
     "dev:k8s": "",
