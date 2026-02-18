@@ -16,7 +16,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: ${params.BRANCH_NAME}, url: 'https://github.com/trackme-app/TrackMe-Edu.git'
+                git branch: "${params.BRANCH_NAME}", url: 'https://github.com/trackme-app/TrackMe-Edu.git'
             }
         }
 
