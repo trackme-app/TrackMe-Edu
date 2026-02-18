@@ -1,6 +1,14 @@
 pipeline {
     agent any
 
+    parameters {
+        string(
+            name: 'BRANCH_NAME',
+            defaultValue: '',
+            description: 'Git branch to build'
+        )
+    }
+
     tools {
         nodejs 'node-25' // Name of NodeJS installation in Jenkins
     }
@@ -8,7 +16,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'dev', url: 'https://github.com/trackme-app/TrackMe-Edu.git'
+                git branch: ${params.BRANCH_NAME}, url: 'https://github.com/trackme-app/TrackMe-Edu.git'
             }
         }
 
