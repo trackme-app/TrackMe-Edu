@@ -1,0 +1,43 @@
+FROM node:25-alpine AS builder
+
+WORKDIR /app
+
+# Copy package files for better caching
+COPY package.json package-lock.json ./
+COPY src/admin/apps/api-gateway/package.json src/admin/apps/api-gateway/package.json
+COPY src/shared/shared_utils/package.json src/shared/shared_utils/package.json
+
+# Install dependencies (cached if package files don't change)
+RUN npm ci
+
+# Copy source code
+COPY src/admin/apps/api-gateway src/admin/apps/api-gateway
+COPY src/shared src/shared
+
+# Build shared utils and api-gateway
+RUN npm run build:shared
+RUN npm run build --workspace @tme/admin-api-gateway
+
+# Prune dev dependencies for production
+RUN npm prune --production
+
+
+FROM node:25-alpine AS production
+
+WORKDIR /app
+
+# Set ownership to node user for the app directory
+RUN chown node:node /app
+
+# Copy necessary files from builder with correct ownership
+COPY --from=builder --chown=node:node /app/package.json ./
+COPY --from=builder --chown=node:node /app/node_modules ./node_modules
+COPY --from=builder --chown=node:node /app/src/shared/shared_utils/dist ./src/shared/shared_utils/dist
+COPY --from=builder --chown=node:node /app/src/shared/shared_utils/package.json ./src/shared/shared_utils/package.json
+COPY --from=builder --chown=node:node /app/src/admin/apps/api-gateway/dist ./dist
+
+USER node
+
+EXPOSE 3000
+
+CMD ["node", "dist/index.js"]

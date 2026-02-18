@@ -1,0 +1,27 @@
+pipeline {
+    agent any
+
+    tools {
+        nodejs 'node-25' // Name of NodeJS installation in Jenkins
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'dev', url: 'https://github.com/trackme-app/TrackMe-Edu.git'
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                sh 'npm install --workspaces'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                sh 'npm run build'
+            }
+        }
+    }
+}
