@@ -74,7 +74,7 @@ fi
 mkdir -p "$service_name"
 cd "$service_name"
 
-npm init --init-license MIT --init-type commonjs -y
+npm init --init-license MIT -y
 
 sed -i "s/\"name\": \"$service_name\"/\"name\": \"@tme\/$service_type-$service_name\"/" package.json
 sed -i 's|"test": "echo \\"Error: no test specified\\" && exit 1"|"build": "tsc",\n    "start": "node dist/index.js",\n    "dev": "ts-node src/index.ts"|' package.json
