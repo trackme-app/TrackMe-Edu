@@ -1,4 +1,5 @@
 # TrackMe Education
+_While I aim to validate and review all code, parts of the TME would be considered 'vide coded'. Beyond MVP I aim to review and refactor any issues that might have been introduced by AI tools_
 
 ## What is TrackMe Education? 
 
